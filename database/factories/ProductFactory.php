@@ -22,7 +22,6 @@ class ProductFactory extends Factory
             'image' => "img/product/test.jpeg",
             'image_2' => "img/product/test.jpeg",
             'image_3' => "img/product/test.jpeg",
-            'stock' => fake()->numberBetween(1, 100),
             'price' => fake()->randomFloat(2, 1, 1000),
             'category_id' => 1
         ];

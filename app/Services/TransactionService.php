@@ -39,7 +39,8 @@ class TransactionService
                 'quantity' => $item['quantity'],
                 'total_price' => $item['total_price'],
                 'user_id' => $request->user_id,
-                'order_id' => $orderId // Assuming you have an order ID to associate with the transaction
+                'order_id' => $orderId,
+                'size' => $item['size'],
             ];
         $this->transaction->create($validateData[$key]);
         }

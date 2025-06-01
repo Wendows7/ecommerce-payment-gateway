@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -53,5 +54,21 @@ Route::middleware('auth')->group(function () {
 
 });
 
+
+Route::middleware('admin')->group(function () {
+    Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('admin.index');
+
+    Route::get('dashboard/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::delete('dashboard/admin/users/delete/{user}', [AdminController::class, 'deleteUserById'])->name('admin.users.delete');
+    Route::post('dashboard/admin/users/create', [AdminController::class, 'addUser'])->name('admin.users.create');
+    Route::put('dashboard/admin/users/update/{user}', [AdminController::class, 'editUserById'])->name('admin.users.update');
+
+    Route::get('dashboard/admin/products', [AdminController::class, 'getProducts'])->name('admin.products');
+    Route::delete('dashboard/admin/products/delete/{product}', [AdminController::class, 'deleteProductById'])->name('admin.products.delete');
+    Route::post('dashboard/admin/products/update', [AdminController::class, 'editProduct'])->name('admin.products.update');
+    Route::post('dashboard/admin/products/create', [AdminController::class, 'addProduct'])->name('admin.products.create');
+
+
+});
 
 

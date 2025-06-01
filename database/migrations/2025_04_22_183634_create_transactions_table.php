@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('product_id');
             $table->bigInteger('quantity');
             $table->bigInteger('total_price');
+            $table->bigInteger('size');
             $table->timestamps();
         });
     }

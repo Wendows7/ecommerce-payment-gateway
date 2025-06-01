@@ -65,6 +65,14 @@
                                             {{-- Kolom Nama & Jumlah --}}
                                             <div class="col-md-4 text-md-start">
                                                 <div class="fw-semibold">{{ $item->product->name ?? '-' }}</div>
+                                                <div>
+                                                    <span class="badge bg-info text-dark"
+                                                          data-toggle="tooltip"
+                                                          data-placement="top"
+                                                          title="Selected shoe size for this item">
+                                                        Size {{ $item->size ?? '-' }}
+                                                    </span>
+                                                </div>
                                                 <div class="small text-muted">x{{ $item->quantity }}</div>
                                             </div>
 
@@ -106,3 +114,9 @@
         .modal-body .row > [class^="col-"] { flex: 0 0 100%; max-width: 100%; }
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

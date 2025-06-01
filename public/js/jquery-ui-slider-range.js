@@ -2554,7 +2554,7 @@ $.extend( $.effects, {
 	}
 } );
 
-// Return an effect options object for the given parameters:
+// Return an effect options object for the given category:
 function _normalizeArguments( effect, options, speed, callback ) {
 
 	// Allow passing all options as the first parameter
@@ -9220,7 +9220,7 @@ function datepicker_extendRemove( target, props ) {
 }
 
 /* Invoke the datepicker functionality.
-   @param  options  string - a command, optionally followed by additional parameters or
+   @param  options  string - a command, optionally followed by additional category or
 					Object - settings for attaching new datepicker functionality
    @return  jQuery object */
 $.fn.datepicker = function( options ) {

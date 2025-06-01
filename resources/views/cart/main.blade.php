@@ -108,6 +108,7 @@
                                     <tr>
                                         <th class="product-thumbnail">Images</th>
                                         <th class="cart-product-name">Product</th>
+                                        <th class="cart-product-name">Size</th>
                                         <th class="product-price">Unit Price</th>
                                         <th class="product-quantity">Quantity</th>
                                         <th class="product-subtotal">Total</th>
@@ -121,6 +122,13 @@
                                                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                                 <td class="product-thumbnail"><a href="#"><img src="{{ asset($details['image']) }}" alt="{{ $details['name'] }}"></a></td>
                                                 <td class="product-name"><a href="#">{{ $details['name'] }}</a></td>
+                                                <td class="product-size">
+                                                    <select class="size-select" data-id="{{ $id }}">
+                                                        @foreach([39, 40, 41, 42, 43] as $size)
+                                                            <option value="{{ $size }}" @if($details['size'] == $size) selected @endif>{{ $size }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
                                                 <td>
                                                     <span class="amount price" data-price="{{ $details['price'] }}">Rp {{ number_format($details['price']) }}</span>
                                                 </td>
@@ -140,22 +148,22 @@
                                         </tbody>
                                     @else
                                         <tbody>
-                                        <tr><td colspan="6" class="text-center">Your cart is empty.</td></tr>
+                                        <tr><td colspan="7" class="text-center">Your cart is empty.</td></tr>
                                         </tbody>
                                     @endif
                                 </table>
                             </div>
 
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="coupon-all">
-                                        <div class="coupon">
-                                            <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
-                                            <button class="bt-btn theme-btn-2" name="apply_coupon" type="submit">Apply coupon</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                            <div class="row">--}}
+{{--                                <div class="col-12">--}}
+{{--                                    <div class="coupon-all">--}}
+{{--                                        <div class="coupon">--}}
+{{--                                            <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">--}}
+{{--                                            <button class="bt-btn theme-btn-2" name="apply_coupon" type="submit">Apply coupon</button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="row">
                                 <div class="col-md-5 ml-auto">
@@ -175,87 +183,96 @@
         </section>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const cartItems = document.querySelectorAll('.cart-item');
-            const totalAmountElement = document.querySelector('.total-amount');
 
-            function formatRupiah(number) {
-                return 'Rp ' + new Intl.NumberFormat('id-ID').format(number);
-            }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const totalAmountElement = document.querySelector('.total-amount');
 
-            function updateSubtotal(itemId) {
-                const itemRow = document.querySelector(`.cart-item[data-id="${itemId}"]`);
+        function formatRupiah(number) {
+            return 'Rp ' + new Intl.NumberFormat('id-ID').format(number);
+        }
 
-                const priceElement = itemRow.querySelector('.price');
-                const quantityInput = itemRow.querySelector('.quantity-input');
-                const subtotalElement = itemRow.querySelector('.subtotal');
-
-                const price = parseFloat(priceElement.dataset.price);
-                const quantity = parseInt(quantityInput.value);
-                const subtotal = price * quantity;
-
-                subtotalElement.textContent = formatRupiah(subtotal);
-                subtotalElement.dataset.subtotal = subtotal;
-
-                updateTotal();
-                updateCartSession(itemId, quantity);
-            }
-
-            function updateTotal() {
-                let total = 0;
-                document.querySelectorAll('.subtotal').forEach(el => {
-                    total += parseFloat(el.dataset.subtotal);
-                });
-                totalAmountElement.textContent = formatRupiah(total);
-            }
-
-            function updateCartSession(itemId, quantity) {
-                fetch('/cart/updateQuantity', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                    body: JSON.stringify({ id: itemId, quantity: quantity })
-                });
-            }
-
-            // Plus button
-            document.querySelectorAll('.quantity-plus').forEach(button => {
-                button.addEventListener('click', function () {
-                    const id = this.dataset.id;
-                    const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
-                    input.value = parseInt(input.value) + 1;
-                    updateSubtotal(id);
-                });
-            });
-
-            // Minus button
-            document.querySelectorAll('.quantity-minus').forEach(button => {
-                button.addEventListener('click', function () {
-                    const id = this.dataset.id;
-                    const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
-                    if (parseInt(input.value) > 1) {
-                        input.value = parseInt(input.value) - 1;
-                        updateSubtotal(id);
-                    }
-                });
-            });
-
-            // Manual input
-            document.querySelectorAll('.quantity-input').forEach(input => {
-                input.addEventListener('change', function () {
-                    const id = this.dataset.id;
-                    if (parseInt(this.value) < 1) this.value = 1;
-                    updateSubtotal(id);
-                });
-            });
-
-            // Init on load
+        function updateSubtotal(itemId) {
+            const itemRow = document.querySelector(`.cart-item[data-id="${itemId}"]`);
+            const priceElement = itemRow.querySelector('.price');
+            const quantityInput = itemRow.querySelector('.quantity-input');
+            const subtotalElement = itemRow.querySelector('.subtotal');
+            const price = parseFloat(priceElement.dataset.price);
+            const quantity = parseInt(quantityInput.value);
+            const subtotal = price * quantity;
+            subtotalElement.textContent = formatRupiah(subtotal);
+            subtotalElement.dataset.subtotal = subtotal;
             updateTotal();
+            // Also send current size
+            const sizeSelect = itemRow.querySelector('.size-select');
+            const size = sizeSelect ? sizeSelect.value : undefined;
+            updateCartSession(itemId, quantity, size);
+        }
+
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('.subtotal').forEach(el => {
+                total += parseFloat(el.dataset.subtotal);
+            });
+            totalAmountElement.textContent = formatRupiah(total);
+        }
+
+        function updateCartSession(itemId, quantity, size) {
+            fetch('/cart/updateQuantity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({ id: itemId, quantity: quantity, size: size })
+            });
+        }
+
+        // Plus button
+        document.querySelectorAll('.quantity-plus').forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
+                input.value = parseInt(input.value) + 1;
+                updateSubtotal(id);
+            });
         });
-    </script>
+
+        // Minus button
+        document.querySelectorAll('.quantity-minus').forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
+                if (parseInt(input.value) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                    updateSubtotal(id);
+                }
+            });
+        });
+
+        // Manual input
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', function () {
+                const id = this.dataset.id;
+                if (parseInt(this.value) < 1) this.value = 1;
+                updateSubtotal(id);
+            });
+        });
+
+        // Size select
+        document.querySelectorAll('.size-select').forEach(select => {
+            select.addEventListener('change', function () {
+                const id = this.dataset.id;
+                const size = this.value;
+                const quantity = document.querySelector(`.quantity-input[data-id="${id}"]`).value;
+                updateCartSession(id, quantity, size);
+            });
+        });
+
+        // Init on load
+        updateTotal();
+    });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('open_modal'))
@@ -332,3 +349,85 @@
 
 
 @endsection
+
+{{--    <script>--}}
+{{--        document.addEventListener('DOMContentLoaded', function () {--}}
+{{--            const cartItems = document.querySelectorAll('.cart-item');--}}
+{{--            const totalAmountElement = document.querySelector('.total-amount');--}}
+
+{{--            function formatRupiah(number) {--}}
+{{--                return 'Rp ' + new Intl.NumberFormat('id-ID').format(number);--}}
+{{--            }--}}
+
+{{--            function updateSubtotal(itemId) {--}}
+{{--                const itemRow = document.querySelector(`.cart-item[data-id="${itemId}"]`);--}}
+
+{{--                const priceElement = itemRow.querySelector('.price');--}}
+{{--                const quantityInput = itemRow.querySelector('.quantity-input');--}}
+{{--                const subtotalElement = itemRow.querySelector('.subtotal');--}}
+
+{{--                const price = parseFloat(priceElement.dataset.price);--}}
+{{--                const quantity = parseInt(quantityInput.value);--}}
+{{--                const subtotal = price * quantity;--}}
+
+{{--                subtotalElement.textContent = formatRupiah(subtotal);--}}
+{{--                subtotalElement.dataset.subtotal = subtotal;--}}
+
+{{--                updateTotal();--}}
+{{--                updateCartSession(itemId, quantity);--}}
+{{--            }--}}
+
+{{--            function updateTotal() {--}}
+{{--                let total = 0;--}}
+{{--                document.querySelectorAll('.subtotal').forEach(el => {--}}
+{{--                    total += parseFloat(el.dataset.subtotal);--}}
+{{--                });--}}
+{{--                totalAmountElement.textContent = formatRupiah(total);--}}
+{{--            }--}}
+
+{{--            function updateCartSession(itemId, quantity, size) {--}}
+{{--                fetch('/cart/updateQuantity', {--}}
+{{--                    method: 'POST',--}}
+{{--                    headers: {--}}
+{{--                        'Content-Type': 'application/json',--}}
+{{--                        'X-CSRF-TOKEN': '{{ csrf_token() }}',--}}
+{{--                    },--}}
+{{--                    body: JSON.stringify({ id: itemId, quantity: quantity, size: size  })--}}
+{{--                });--}}
+{{--            }--}}
+
+{{--            // Plus button--}}
+{{--            document.querySelectorAll('.quantity-plus').forEach(button => {--}}
+{{--                button.addEventListener('click', function () {--}}
+{{--                    const id = this.dataset.id;--}}
+{{--                    const input = document.querySelector(`.quantity-input[data-id="${id}"]`);--}}
+{{--                    input.value = parseInt(input.value) + 1;--}}
+{{--                    updateSubtotal(id);--}}
+{{--                });--}}
+{{--            });--}}
+
+{{--            // Minus button--}}
+{{--            document.querySelectorAll('.quantity-minus').forEach(button => {--}}
+{{--                button.addEventListener('click', function () {--}}
+{{--                    const id = this.dataset.id;--}}
+{{--                    const input = document.querySelector(`.quantity-input[data-id="${id}"]`);--}}
+{{--                    if (parseInt(input.value) > 1) {--}}
+{{--                        input.value = parseInt(input.value) - 1;--}}
+{{--                        updateSubtotal(id);--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            });--}}
+
+{{--            // Manual input--}}
+{{--            document.querySelectorAll('.quantity-input').forEach(input => {--}}
+{{--                input.addEventListener('change', function () {--}}
+{{--                    const id = this.dataset.id;--}}
+{{--                    if (parseInt(this.value) < 1) this.value = 1;--}}
+{{--                    updateSubtotal(id);--}}
+{{--                });--}}
+{{--            });--}}
+
+{{--            // Init on load--}}
+{{--            updateTotal();--}}
+{{--        });--}}
+{{--    </script>--}}

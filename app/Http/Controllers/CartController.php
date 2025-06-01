@@ -80,6 +80,7 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Nothing Product To Checkout!');
         }
 
+
         $orderCode = $this->transactionService->checkout($request, $cart);
 
         session()->forget('cart');

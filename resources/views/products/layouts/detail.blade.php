@@ -102,6 +102,11 @@
                                     <img src="{{asset($product->image_3)}}" class="img-fluid" alt="">
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#size" role="tab" aria-controls="contact" aria-selected="false">
+                                    <img src="{{asset('images/uk.jpg')}}" class="img-fluid" alt="">
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content custom-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -113,6 +118,9 @@
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <img src="{{asset($product->image_3)}}" class="img-fluid" alt="">
                             </div>
+                            <div class="tab-pane fade" id="size" role="tabpanel" aria-labelledby="contact-tab">
+                                <img src="{{asset('images/uk.jpg')}}" class="img-fluid" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,38 +130,34 @@
                         <span class="details-pro-price mb-40">Rp {{number_format($product->price)}}</span>
                         <p>{{$product->description}}</p>
                         <div class="size-wrapper mb-35">
+                            <form action="{{ route('cart.addToCart') }}" method="POST" style="display:inline;">
+                                @csrf
                             <div class="size-selector">
                                 <span><strong>Select Size :</strong></span>
-
                                 <label>
-                                    <input type="radio" name="shoe_size" value="38" required>
-                                    <span>38</span>
+                                    <input type="radio" class="size-radio" name="size" value="39">
+                                    <span>39</span>
                                 </label>
-
                                 <label>
-                                    <input type="radio" name="shoe_size" value="40">
+                                    <input type="radio" class="size-radio" name="size" value="40">
                                     <span>40</span>
                                 </label>
-
                                 <label>
-                                    <input type="radio" name="shoe_size" value="42">
+                                    <input type="radio" class="size-radio" name="size" value="41">
+                                    <span>41</span>
+                                </label>
+                                <label>
+                                    <input type="radio" class="size-radio" name="size" value="42">
                                     <span>42</span>
                                 </label>
-
                                 <label>
-                                    <input type="radio" name="shoe_size" value="44">
-                                    <span>44</span>
-                                </label>
-
-                                <label>
-                                    <input type="radio" name="shoe_size" value="46">
-                                    <span>46</span>
+                                    <input type="radio" class="size-radio" name="size" value="43">
+                                    <span>43</span>
                                 </label>
                             </div>
                         </div>
                         <div class="pro-quan-area mb-55">
-                            <form action="{{ route('cart.addToCart') }}" method="POST" style="display:inline;">
-                                @csrf
+
                             <div class="product-quantity">
                                 <div class="cart-plus-minus"><input type="text" class="quantity-input" value="1" name="quantity"/></div>
                             </div>
@@ -172,7 +176,7 @@
                         <div class="stock-update">
                             <div class="stock-list">
                                 <ul>
-                                    <li><span>Stock :</span> <span class="s-text red">{{$product->stock}}</span></li>
+                                    <li><span>Stock :</span> <span class="s-text red">{{$totalStock}}</span></li>
                                     <li><span>Category :</span> <span class="s-text"> {{$product->category->name}}</span></li>
                                 </ul>
                             </div>
@@ -205,6 +209,7 @@
                             <div class="pro-title">
                                 <h6>
                                     <a href="{{route('products.detail', ['product' => $value->id])}}">{{$value->name}}</a>
+                                    <p>({{$product->category->name}})</p>
                                 </h6>
                                 <div class="common-price-hover">
                                     <h5 class="pro-price">Rp {{ number_format($value->price)}}</h5>
@@ -219,4 +224,19 @@
     </section>
     <!-- product-area end -->
 </main>
+
+<script>
+    let lastChecked = null;
+    document.querySelectorAll('.size-radio').forEach(function(radio) {
+        radio.addEventListener('mousedown', function(e) {
+            if (this === lastChecked) {
+                this.checked = false;
+                lastChecked = null;
+                e.preventDefault();
+            } else {
+                lastChecked = this;
+            }
+        });
+    });
+</script>
 @endsection

@@ -27,9 +27,10 @@ class CartService
         } else {
             $cart[$request->product_id] = [
                 "name" => $product->name,
-                "quantity" => request()->quantity,
+                "quantity" => $request->quantity,
                 "price" => $product->price,
-                "image" => $product->image
+                "image" => $product->image,
+                'size' => $request->size,
             ];
         }
         session()->put('cart', $cart);
@@ -49,6 +50,7 @@ class CartService
         $request->validate([
             'id' => 'required',
             'quantity' => 'required|integer|min:1',
+            'size' => 'required'
         ]);
 
         $cart = session()->get('cart');
@@ -56,6 +58,7 @@ class CartService
 
         if (isset($cart[$request->id])) {
             $cart[$request->id]['quantity'] = $request->quantity;
+            $cart[$request->id]['size'] = $request->size;
             session()->put('cart', $cart);
             return true;
         } else {

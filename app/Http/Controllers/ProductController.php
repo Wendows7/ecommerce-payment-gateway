@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Services\ProductService;
+use App\Services\StockProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,10 +13,12 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     protected $product;
+    protected $stockProductService;
 
-    public function __construct(ProductService $productService)
+    public function __construct(ProductService $productService, StockProductService $stockProductService)
     {
         $this->product = $productService;
+        $this->stockProductService = $stockProductService;
     }
     public function index()
     {
@@ -37,9 +40,11 @@ class ProductController extends Controller
     public function detail($productId)
     {
         $product = $this->product->findById($productId);
-        $products = Product::all();
+        $totalStock = $this->stockProductService->totalStockByProductId($productId);
+
+        $products = Product::with('stockProduct')->get();
         $totalProductByCategory = $this->product->getTotalProductByCategory();
-        return view('products.layouts.detail', compact('product', 'products','totalProductByCategory'));
+        return view('products.layouts.detail', compact('product', 'products','totalProductByCategory', 'totalStock'));
     }
 
     public function store(Request $request)

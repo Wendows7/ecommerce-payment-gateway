@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\ProductService;
 use App\Services\AuthService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -38,6 +39,12 @@ class LoginController extends Controller
     {
         $auth = $this->authService->authenticate($request);
         if ($auth) {
+            if (auth()->user()->role == 'admin')
+            {
+                $waktuLogin = Carbon::now();
+                $waktuLogin = session()->put('waktuLogin', $waktuLogin);
+                return redirect()->route('admin.index');
+            }
             return redirect()->route('home')->with('success', 'Login Successful!');
         }else{
             return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\MidtransService;
 use App\Services\PaymentService;
 use App\Services\ProductService;
+use App\Services\StockProductService;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Midtrans\Config;
@@ -21,14 +22,17 @@ class PaymentController extends Controller
     protected $transactionService;
     protected  $productService;
 
+    protected $stockProductService;
+
     public function __construct(orderService $orderService, PaymentService $paymentService, MidtransService $midtransService,
-                                TransactionService $transactionService, productService $productService)
+                                TransactionService $transactionService, productService $productService, StockProductService $stockProductService)
     {
         $this->orderService = $orderService;
         $this->paymentService = $paymentService;
         $this->midtransService = $midtransService;
         $this->transactionService = $transactionService;
         $this->productService = $productService;
+        $this->stockProductService = $stockProductService;
 
         Config::$serverKey = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.is_production');
@@ -73,7 +77,6 @@ class PaymentController extends Controller
             $request->gross_amount .
             $serverKey
         );
-
         if ($signatureKey !== $request->signature_key) {
             return response()->json(['message' => 'Invalid signature key'], 403);
         }
@@ -99,7 +102,8 @@ class PaymentController extends Controller
         $order->save();
 
         foreach ($transactionData as $product) {
-            $this->productService->updateStockById($product->product->id, $product->product->stock - $product->quantity);
+            $currentStock = $this->stockProductService->getStockSizeByProductId($product->product_id, $product->size);
+            $this->stockProductService->updateStockById($product->product->id, $product->size, $currentStock - $product->quantity);
         }
 
         return response()->json(['message' => 'Webhook processed successfully']);
