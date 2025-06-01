@@ -161,6 +161,9 @@
                                     'pending' => 'pending',
                                     'success', 'settlement', 'paid' => 'success',
                                     'cancel', 'failed', 'deny' => 'cancel',
+                                     'packaged' => 'packaged',
+                                     'sending' => 'sending',
+                                      'done' => 'done',
                                     default => 'other'
                                 };
                             @endphp

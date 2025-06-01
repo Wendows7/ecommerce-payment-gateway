@@ -2,7 +2,8 @@
 
 @section('body')
 
-{{--@include('dashboard/products/modal/detail')--}}
+@include('dashboard/orders/modal/detail')
+@include('dashboard/orders/modal/edit')
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
@@ -17,7 +18,7 @@
       <div class="section-body">
         <h2 class="section-title">Data Orders</h2>
         <p class="section-lead">
-          Change information about product, like create, edit and delete
+          Change information order status
         </p>
 
         <div class="row">
@@ -63,6 +64,9 @@
                                       'pending' => 'pending',
                                       'success', 'settlement', 'paid' => 'success',
                                       'cancel', 'failed', 'deny' => 'cancel',
+                                      'packaged' => 'packaged',
+                                      'sending' => 'sending',
+                                      'done' => 'done',
                                       default => 'other'
                                   };
                               @endphp
@@ -70,7 +74,10 @@
                             {{ ucfirst($order['status'] ?? '-') }}
                         </span>
                         <td>
-                            <button class="btn btn-icon icon-left btn-primary mb-1" data-toggle="modal" data-target="#detailModal{{ $order['id'] }}"><i class="fas fa-eye"></i>Detail</button>
+                            <button class="btn btn-icon icon-left btn-primary mb-1" data-toggle="modal" data-target="#detailModal{{ $order['order_code'] }}"><i class="fas fa-eye"></i>Detail</button>
+                              @if($order['status'] !== 'done')
+                              <button class="btn btn-warning" data-toggle="modal" data-target="#updateStatusModal{{ $order['order_code'] }}">Update Status</button>
+                              @endif
                         </td>
                       </tr>
                       @endforeach

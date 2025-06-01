@@ -17,6 +17,11 @@ class CartService
 
     public function addToCart($request)
     {
+
+        if ($request->size == null)
+        {
+            return redirect()->back()->with('error', 'Please select product size!');
+        }
         $product = $this->productService->findById($request->product_id);
         if (!$product) {
             return redirect()->route('cart.index')->with('error', 'Product not found!');

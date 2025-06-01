@@ -7,7 +7,9 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
+use function Symfony\Component\Translation\t;
 
 class OrderService
 {
@@ -19,12 +21,17 @@ class OrderService
     protected $paymentService;
 
     protected $orderDetailService;
-    public function __construct(Order $orderService, Transaction $transactionService, Payment $paymentService, OrderDetail $orderDetailService)
+
+    protected $userService;
+
+    public function __construct(Order $orderService, Transaction $transactionService,
+                                Payment $paymentService, OrderDetail $orderDetailService, User $userService)
     {
         $this->transactionService = $transactionService;
         $this->orderService = $orderService;
         $this->paymentService = $paymentService;
         $this->orderDetailService = $orderDetailService;
+        $this->userService = $userService;
     }
 
     public function createOrder($userId, $totalPrice)
@@ -105,20 +112,25 @@ class OrderService
 
     public function getOrderData()
     {
-        $orderData = $this->orderService->latest()->with('transactions')->get();
+        $orderData = $this->orderService->latest()->with('transactions','user')->get();
         $data = collect($orderData)->map(function ($order) {
             return [
-                'id' => $order->id,
                 'order_code' => $order->order_code,
                 'status' => $order->status,
                 'total_price' => $order->total_price,
                 'created_at' => $order->created_at,
                 'transactions' => $this->transactionService->where('order_id', $order->id)->with('product')->get(),
                 'payment' => $this->paymentService->where('order_id', $order->id)->get(),
+                'user' => $order->user,
             ];
         });
 
         return $data;
+    }
+
+    public function updateStatusOrderByOrderCode($request)
+    {
+        $this->orderService->where('order_code', $request->order_code)->update(['status' => $request->status]);
     }
 
 

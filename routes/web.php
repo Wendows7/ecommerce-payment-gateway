@@ -74,6 +74,7 @@ Route::middleware('admin')->group(function () {
     Route::delete('dashboard/admin/category/delete', [AdminController::class, 'deleteCategoryById'])->name('admin.category.delete');
 
     Route::get('dashboard/admin/orders', [AdminController::class, 'getOrders'])->name('admin.orders');
+    Route::put('dashboard/admin/orders/update', [AdminController::class, 'updateStatusOrder'])->name('admin.orders.update');
 
 
 });

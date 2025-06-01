@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-body bg-light">
                     <div class="row g-3 mb-3">
-                        <div class="col-6 col-md-4">
+                        <div class="col-6 col-md-6">
                             <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
                                 <div class="text-muted small">Status</div>
                                 @php
@@ -33,6 +33,9 @@
                                         'pending' => 'pending',
                                         'success', 'settlement', 'paid' => 'success',
                                         'cancel', 'failed', 'deny' => 'cancel',
+                                        'packaged' => 'packaged',
+                                         'sending' => 'sending',
+                                         'done' => 'done',
                                         default => 'other'
                                     };
                                 @endphp
@@ -41,19 +44,19 @@
                             </span>
                             </div>
                         </div>
-                        <div class="col-6 col-md-4">
+                        <div class="col-6 col-md-6">
                             <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
                                 <div class="text-muted small">Total</div>
                                 <div class="fw-bold mt-1">Rp {{ number_format($order['total_price'] ?? 0, 0, ',', '.') }}</div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4">
-                            <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
-                                <div class="text-muted small">Status Pengiriman</div>
-                                <div class="mt-1">{{ $order['customer_name'] ?? '-' }}</div>
-                                <div class="small text-muted">{{ $order['customer_email'] ?? '' }}</div>
-                            </div>
-                        </div>
+{{--                        <div class="col-12 col-md-4">--}}
+{{--                            <div class="bg-white rounded-3 p-3 h-100 shadow-sm">--}}
+{{--                                <div class="text-muted small">Status Pengiriman</div>--}}
+{{--                                <div class="mt-1">{{ $order['customer_name'] ?? '-' }}</div>--}}
+{{--                                <div class="small text-muted">{{ $order['customer_email'] ?? '' }}</div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="bg-white rounded-3 p-3 shadow-sm">
                         <div class="mb-2 fw-semibold">Order Items</div>
@@ -108,6 +111,9 @@
     .badge-status.success { background: #c8e6c9; color: #256029; }
     .badge-status.cancel { background: #ffcdd2; color: #b71c1c; }
     .badge-status.other { background: #e3e3e3; color: #333; }
+    .badge-status.packaged { background: #0da8ee; color: #0a568c; }
+    .badge-status.sending { background: #00bb00; color: #0a001f; }
+    .badge-status.done { background: #9fcdff; color: #0f253c; }
     .bg-primary-subtle { background: #e7e9fd !important; }
     @media (max-width: 576px) {
         .modal-lg { max-width: 98vw; }

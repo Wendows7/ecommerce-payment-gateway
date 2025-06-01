@@ -55,7 +55,8 @@ class UserService
 
     public function getUserById($id)
     {
-        return $this->user->where('id', $id)->first();
+       $data = $this->user->where('id', $id)->first();
+        return $data;
     }
 
 

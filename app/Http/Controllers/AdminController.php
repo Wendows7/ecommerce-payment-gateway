@@ -193,4 +193,13 @@ class AdminController extends Controller
         return view('dashboard.orders.index', compact('orders', 'selisihMenit'));
     }
 
+    public function updateStatusOrder(Request $request)
+    {
+
+        $this->orderService->updateStatusOrderByOrderCode($request);
+
+        return redirect()->back()->with('success', 'Order status has been updated!');
+
+    }
+
 }
