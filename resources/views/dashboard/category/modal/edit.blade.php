@@ -1,8 +1,8 @@
 
 
 {{-- start edit modal --}}
-@foreach ($parameters as $parameter => $value)
-     
+@foreach ($categories as $category => $value)
+
 <div class="modal fade" tabindex="-1" role="dialog" id="editModal{{ $value->id }}">
   <div class="modal-dialog" role="document">
    <div class="modal-content">
@@ -13,9 +13,9 @@
        </button>
      </div>
      <div class="modal-body">
-       <form method="post" action="/dashboard/parameters/{{ $value->id }}" class="needs-validation" novalidate="">
-         @method('put')
+       <form method="post" action="{{route('admin.category.update')}}" class="needs-validation" novalidate="">
          @csrf
+           <input type="hidden" name="id" value="{{$value->id}}">
          <div class="card-body">
              <div class="form-group ">
                  <label>Name</label>

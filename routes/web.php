@@ -68,6 +68,13 @@ Route::middleware('admin')->group(function () {
     Route::post('dashboard/admin/products/update', [AdminController::class, 'editProduct'])->name('admin.products.update');
     Route::post('dashboard/admin/products/create', [AdminController::class, 'addProduct'])->name('admin.products.create');
 
+    Route::get('dashboard/admin/category', [AdminController::class, 'getCategory'])->name('admin.category');
+    Route::post('dashboard/admin/category/create', [AdminController::class, 'addCategory'])->name('admin.category.create');
+    Route::post('dashboard/admin/category/update', [AdminController::class, 'editCategoryById'])->name('admin.category.update');
+    Route::delete('dashboard/admin/category/delete', [AdminController::class, 'deleteCategoryById'])->name('admin.category.delete');
+
+    Route::get('dashboard/admin/orders', [AdminController::class, 'getOrders'])->name('admin.orders');
+
 
 });
 

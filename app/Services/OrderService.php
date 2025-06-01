@@ -103,5 +103,23 @@ class OrderService
         Order::where('order_code', $orderCode)->update(['status' => 'cancel']);
     }
 
+    public function getOrderData()
+    {
+        $orderData = $this->orderService->latest()->with('transactions')->get();
+        $data = collect($orderData)->map(function ($order) {
+            return [
+                'id' => $order->id,
+                'order_code' => $order->order_code,
+                'status' => $order->status,
+                'total_price' => $order->total_price,
+                'created_at' => $order->created_at,
+                'transactions' => $this->transactionService->where('order_id', $order->id)->with('product')->get(),
+                'payment' => $this->paymentService->where('order_id', $order->id)->get(),
+            ];
+        });
+
+        return $data;
+    }
+
 
 }

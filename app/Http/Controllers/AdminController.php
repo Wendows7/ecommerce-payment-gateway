@@ -6,6 +6,7 @@ use App\Models\Dashboard;
 use App\Models\User;
 use App\Services\AdminService;
 use App\Services\CategoryProductService;
+use App\Services\OrderService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use App\Services\UserService;
@@ -15,15 +16,18 @@ class AdminController extends Controller
     protected $productService;
     protected $userService;
     protected $adminService;
-
     protected $categoryService;
 
-    public function __construct(ProductService $productService, UserService $userService, AdminService $adminService, CategoryProductService $categoryService)
+    protected $orderService;
+
+    public function __construct(ProductService $productService, UserService $userService, AdminService $adminService,
+                                CategoryProductService $categoryService, OrderService $orderService)
     {
         $this->productService = $productService;
         $this->userService = $userService;
         $this->adminService = $adminService;
         $this->categoryService = $categoryService;
+        $this->orderService = $orderService;
     }
 
     public function index()
@@ -142,6 +146,51 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Success Create Data');
 
+    }
+
+    public function getCategory()
+    {
+        $categories = $this->categoryService->getAll();
+        $title = 'Delete Category!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+        $selisihMenit = $this->adminService->showMinute();
+
+        return view('dashboard.category.index', compact('categories', 'selisihMenit'));
+    }
+
+    public function addCategory(Request $request)
+    {
+        $this->categoryService->addCategory($request);
+
+        return redirect()->back()->with('success', 'Success Create Data');
+
+    }
+
+    public function editCategoryById(Request $request)
+    {
+        $this->categoryService->editCategory($request);
+
+        return redirect()->back()->with('success', 'Success Edit Data');
+    }
+
+    public function deleteCategoryById(Request $request)
+    {
+
+        $this->categoryService->deleteCategoryById($request->id);
+
+        return redirect()->back()->with('success', 'Category has been deleted!');
+    }
+
+    public function getOrders()
+    {
+        $orders = $this->orderService->getOrderData();
+        $title = 'Delete Category!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+        $selisihMenit = $this->adminService->showMinute();
+
+        return view('dashboard.orders.index', compact('orders', 'selisihMenit'));
     }
 
 }

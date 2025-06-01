@@ -107,6 +107,7 @@
                                                         @csrf
                                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                         <input type="hidden" name="quantity" value="1">
+                                                        <input type="hidden" name="size" value="39">
 
                                                         <button type="submit"
                                                                 class="action-icon"
