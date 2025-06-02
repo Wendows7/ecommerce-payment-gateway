@@ -1,6 +1,6 @@
 @foreach($orders as $order)
     <div class="modal fade" id="detailModal{{ $order['order_code'] }}" tabindex="-1" aria-labelledby="orderViewModalLabel{{ $order['order_code'] }}" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered custom-order-modal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header py-4" style="background: linear-gradient(90deg, #4e54c8 0%, #8f94fb 100%);">
                     <div class="d-flex align-items-center w-100">
@@ -120,27 +120,6 @@
         .modal-body .row > [class^="col-"] { flex: 0 0 100%; max-width: 100%; }
     }
 </style>
-
-<style>
-    .custom-order-modal {
-        max-width: 350px;
-    }
-    @media (max-width: 576px) {
-        .custom-order-modal { max-width: 98vw; }
-    }
-
-    .modal-dialog {
-        max-height: 90vh; /* agar tidak terlalu panjang di Windows */
-        overflow-y: auto;
-    }
-
-    .modal-body {
-        max-height: 70vh; /* batas ketinggian isi modal */
-        overflow-y: auto; /* bikin scroll jika terlalu tinggi */
-    }
-</style>
-
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

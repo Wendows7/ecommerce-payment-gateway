@@ -44,3 +44,22 @@
     .popup-content { background:#fff; border-radius:12px; box-shadow:0 2px 16px rgba(0,0,0,0.07); }
     .close-btn { cursor:pointer; position:absolute; right:20px; top:20px; }
 </style>
+
+<style>
+    .popup-content {
+        max-width: 500px !important;
+        width: 98vw !important;
+        padding: 18px 12px !important;
+        position: relative;
+        max-height: 1000px; /* adjust as needed */
+        overflow-y: auto;
+    }
+    @media (max-width: 400px) {
+        .popup-content {
+            max-width: 99vw !important;
+            width: 99vw !important;
+            padding: 10px 4px !important;
+            max-height: 340px; /* adjust for mobile */
+        }
+    }
+</style>
