@@ -49,9 +49,9 @@
     .popup-content {
         max-width: 500px !important;
         width: 98vw !important;
-        padding: 18px 12px !important;
+        padding: 40px 32px !important;
         position: relative;
-        max-height: 1000px; /* adjust as needed */
+        max-height: 500px; /* adjust as needed */
         overflow-y: auto;
     }
     @media (max-width: 400px) {

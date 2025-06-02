@@ -70,7 +70,7 @@ class UserController extends Controller
 
         if ($orderDetail)
         {
-        return redirect()->route('user.orders')->with('success', 'Data berhasil dikirim.')->with('snapToken', $snapToken);
+        return redirect()->back()->with('success', 'Data berhasil dikirim.')->with('snapToken', $snapToken);
         }else{
 
             return redirect()->back()->with('info', 'Detail order sudah ada, silahkan lanjutkan ke pembayaran.')->with('snapToken', $snapToken);

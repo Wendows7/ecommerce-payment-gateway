@@ -8,7 +8,7 @@
             Silakan isi form di bawah ini untuk melanjutkan proses pembelian.<br>
             <b>Pastikan semua informasi yang diberikan akurat dan lengkap.</b>
         </p>
-        <form method="POST" action="{{route('cart.createOrderDetail')}}">
+        <form method="POST" action="{{route('user.createOrderDetail')}}">
             @csrf
             <input type="hidden" name="orderCode" value="{{ session('orderCode') }}">
             <div class="form-group" style="margin-bottom:18px;">

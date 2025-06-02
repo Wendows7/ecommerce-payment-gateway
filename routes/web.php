@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/createOrderDetail', [UserController::class, 'createOrderDetail'])->name('user.createOrderDetail');
     Route::post('/user/order/cancel/{orderCode}', [UserController::class, 'cancelOrder'])->name('user.cancelOrderByOrderCode');
 
+    Route::post('/product/buy', [CartController::class, 'buyNow'])->name('product.buy');
+
 });
 
 

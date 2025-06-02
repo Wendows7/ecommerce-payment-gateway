@@ -96,4 +96,12 @@ class CartController extends Controller
         return redirect()->route('payment.createCharge', compact('orderCode'))->with('success', "Successfully created order");
     }
 
+    public function buyNow(Request $request)
+    {
+        $orderCode = $this->transactionService->checkout($request, null);
+
+        return redirect()->back()->with('open_modal', true)->with('orderCode', $orderCode);
+    }
+
+
 }
