@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\OrderToken;
 use Midtrans\Config;
 use Midtrans\Snap;
 
@@ -10,9 +11,13 @@ class MidtransService
 
     protected $orderService;
 
-    public function __construct(OrderService $orderService)
+    protected $orderToken;
+
+    public function __construct(OrderService $orderService, OrderToken $orderToken)
     {
         $this->orderService = $orderService;
+        $this->orderToken = $orderToken;
+
         Config::$serverKey = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.is_production');
         Config::$isSanitized = config('midtrans.is_sanitized');
@@ -23,6 +28,16 @@ class MidtransService
     {
         $orderId = $codeId;
         $orderData = $this->orderService->getByOrderCode($orderId);
+
+        $orderToken = $this->orderToken->where('order_id', $orderData->id)->first();
+
+//        check of snap token not exist
+        if ($orderToken) {
+            return $orderToken->token;
+        }
+
+
+
 
         if ($orderData == null) {
             return response()->json(['message' =>"order code not found"], 404);
@@ -43,6 +58,8 @@ class MidtransService
         ];
 
         $snapToken = Snap::getSnapToken($params);
+
+        $this->orderToken->create(['order_id' => $orderData->id, 'token' => $snapToken]);
         return $snapToken;
     }
 }

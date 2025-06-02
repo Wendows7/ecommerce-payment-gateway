@@ -36,4 +36,9 @@ class Order extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function orderToken()
+    {
+        return $this->hasOne(OrderToken::class);
+    }
 }
