@@ -28,7 +28,8 @@
             background-color: #fff;
             padding: 30px;
             border-radius: 8px;
-            width: 400px;
+            max-width: 350px;
+            width: 90%;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             position: relative;
         }

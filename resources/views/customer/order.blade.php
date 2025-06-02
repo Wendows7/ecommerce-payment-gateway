@@ -57,9 +57,10 @@
         /* Content Box */
         .popup-content {
             background-color: #fff;
-            padding: 30px;
+            padding: 18px 16px;
             border-radius: 8px;
-            width: 400px;
+            max-width: 320px;
+            width: 95%;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             position: relative;
         }
