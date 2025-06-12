@@ -67,20 +67,20 @@
                         <a href="#" id="search-btn" class="search-btn nav-search search-trigger">
                             <i class="fas fa-search"></i>
                         </a>
-                        <a href="{{route('auth.login')}}"><i class="fas fa-user"></i></a>
-                        <a href="{{route('cart.index')}}"><i class="fas fa-cart-arrow-down"></i></a>
+                        <a href="{{route('auth.login')}}"><i class="fas fa-user">Login</i></a>
+                        <a href="{{route('cart.index')}}"><i class="fas fa-cart-arrow-down">Cart</i></a>
                         @if(auth()->check())
-                        <a href="{{route('user.orders')}}"><i class="fas fa-receipt"></i></a>
+                        <a href="{{route('user.orders')}}"><i class="fas fa-receipt">Orders</i></a>
                             <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                                 @csrf
                                 <button type="submit" style="
-                                    font-size: 20px;
+                                    font-size: 15px;
                                     color: black;
                                     background: none;
                                     border: none;
                                     cursor: pointer;
                                     padding: 30px;">
-                                    <i class="fas fa-sign-out-alt"></i>
+                                    <i class="fas fa-sign-out-alt">Logout</i>
                                 </button>
                             </form>
                         @endif
