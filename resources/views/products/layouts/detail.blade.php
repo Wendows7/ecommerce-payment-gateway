@@ -247,7 +247,9 @@
                                         <input type="hidden" name="size" id="buyNowSize" value="">
                                         <input type="hidden" name="quantity" id="buyNowQuantity" value="1">
                                         <input type="hidden" name="price" value="{{$product->price}}">
+                                        @can('auth')
                                         <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                                        @endcan
                                         <button type="submit"
                                                 class="action-icon btn-black"
                                                 data-toggle="tooltip"
