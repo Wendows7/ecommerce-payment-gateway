@@ -23,10 +23,24 @@
             max-width: 100px;
             height: auto;
             display: block;
-        }</style>
+
+        }
+
+        /*.main-menu ul li a {*/
+        /*    font-size: 20px;*/
+        /*    padding: 16px 32px;*/
+        /*    display: inline-block;*/
+        /*}*/
+        /*.main-menu ul {*/
+        /*    gap: 10px;*/
+        /*    display: flex;*/
+        /*    justify-content: center;*/
+        /*    align-items: center;*/
+        /*}*/
+    </style>
 
 
-    <title>Shoes Store</title>
+    <title>Kotama</title>
 </head>
 
 <body>
@@ -55,13 +69,13 @@
                     <div class="main-menu text-center">
                         <nav id="mobile-menu">
                             <ul>
-                                <li><a href="{{route('home')}}">Home</a></li>
+                                <li><a style="font-size: 20px;" href="{{route('home')}}">Home</a></li>
                                 <li class="mega-menu">
-                                    <a href="{{route('products.index')}}">Products</a>
+                                    <a style="font-size: 20px;" href="{{route('products.index')}}">Products</a>
                                 </li>
-                                <li><a href="{{route('about')}}">About</a></li>
+                                <li><a style="font-size: 20px;" href="{{route('about')}}">About</a></li>
                                 <li>
-                                    <a href="{{route('contact')}}">Contact</a>
+                                    <a style="font-size: 20px;" href="{{route('contact')}}">Contact</a>
                                 </li>
                             </ul>
                         </nav>
@@ -72,14 +86,16 @@
                         <a href="#" id="search-btn" class="search-btn nav-search search-trigger">
                             <i class="fas fa-search"></i>
                         </a>
-                        <a href="{{route('auth.login')}}"><i class="fas fa-user">Login</i></a>
-                        <a href="{{route('cart.index')}}"><i class="fas fa-cart-arrow-down">Cart</i></a>
+
+
                         @if(auth()->check())
-                        <a href="{{route('user.orders')}}"><i class="fas fa-receipt">Orders</i></a>
+                        <a href="{{route('auth.login')}}"><i style="font-size: 20px;" class="fas fa-user">Profile</i></a>
+                        <a href="{{route('cart.index')}}"><i style="font-size: 20px;" class="fas fa-cart-arrow-down">Cart</i></a>
+                        <a href="{{route('user.orders')}}"><i style="font-size: 20px;" class="fas fa-receipt">Orders</i></a>
                             <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                                 @csrf
                                 <button type="submit" style="
-                                    font-size: 15px;
+                                    font-size: 20px;
                                     color: black;
                                     background: none;
                                     border: none;
@@ -88,6 +104,9 @@
                                     <i class="fas fa-sign-out-alt">Logout</i>
                                 </button>
                             </form>
+                        @else
+                            <a href="{{route('auth.login')}}"><b><i style="font-size: 20px;">Login</i></b></a>
+                            <a href="{{route('register')}}"><b><i style="font-size: 20px;">Register</i></b></a>
                         @endif
                     </div>
                 </div>
