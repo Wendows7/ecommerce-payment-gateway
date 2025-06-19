@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset("img/logo/favicon.png")}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset("images/logo.jpeg")}}">
     <!-- All CSS -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset("css/fontawesome.min.css")}}">
@@ -19,11 +19,38 @@
     <link rel="stylesheet" href="{{asset("css/responsive.css")}}">
     <link rel="stylesheet" href="{{asset("css/nice-select.css")}}">
     <link rel="stylesheet" href="{{asset("css/ui-range-slider.css")}}">
-    <style>.logo img {
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+
+    <style>
+        .logo img {
             max-width: 100px;
             height: auto;
             display: block;
 
+        }
+        .footer-logo img {
+            max-width: 100px;
+            height: auto;
+            display: block;
+
+        }
+
+        .footer-payment img {
+            width: 70px;
+            height: 40px;
+            object-fit: contain;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .footer-widget i {
+            font-size: 40px;
+        }
+
+        .footer-area {
+            border-top: 2px solid #e0e0e0;
+            margin-top: 40px;
         }
 
         /*.main-menu ul li a {*/
@@ -89,7 +116,7 @@
 
 
                         @if(auth()->check())
-                        <a href="{{route('auth.login')}}"><i style="font-size: 20px;" class="fas fa-user">Profile</i></a>
+                        <a href="{{route('user.profile')}}"><i style="font-size: 20px;" class="fas fa-user">Profile</i></a>
                         <a href="{{route('cart.index')}}"><i style="font-size: 20px;" class="fas fa-cart-arrow-down">Cart</i></a>
                         <a href="{{route('user.orders')}}"><i style="font-size: 20px;" class="fas fa-receipt">Orders</i></a>
                             <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
@@ -177,26 +204,36 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-widget mb-30">
                         <div class="footer-logo">
-                            <a href="index.html"><img src="{{asset("img/footer/footer-logo.png")}}" class="img-fluid" alt=""></a>
+{{--                            <a href="index.html"><img src="{{asset("images/logo.jpeg")}}" class="img-fluid" alt=""></a>--}}
+                            <h5>Bantuan</h5>
                         </div>
                         <div class="footer-text mt-45">
-                            <h6>Phone:<span> +4.509.120.6705</span></h6>
-                            <h6>Address:<span> 1418 Riverwood Drive, Suite 3245</span></h6>
-                            <span>Cottonwood, CA 96052, United States</span>
+                            <li><a href="{{route('contact')}}">Hubungi Kami</a></li>
+                            <li><a href="#">Garansi Produk <b>(3 Bulan Pemakaian)</b></a></li>
+                            <li><a href="">Another</a></li>
                         </div>
                         <div class="footer-payment mt-40">
-                            <span>We Accepts:</span>
-                            <a href="#"><img src="{{asset("img/footer/payment.png")}}" class="img-fluid" alt=""></a>
+                            <span>Metode Pembayaran:</span>
+                            <img src="{{ asset('images/BCA.webp') }}" alt="BCA" style="height:50px; margin-right:8px;">
+                            <img src="{{ asset('images/mandiri.png') }}" alt="Mandiri" style="height:50px; margin-right:8px;">
+                            <img src="{{ asset('images/BNI.png') }}" alt="BNI" style="height:50px; margin-right:8px;">
+                            <img src="{{ asset('images/BRI.png') }}" alt="BRI" style="height:50px; margin-right:8px;">
+                            <br>
+                            <img src="{{ asset('images/GOPAY.png') }}" alt="GOPAY" style="height:50px; margin-right:8px;">
+                            <img src="{{ asset('images/dana.png') }}" alt="dana" style="height:50px; margin-right:8px;">
+                            <img src="{{ asset('images/shoopepay.png') }}" alt="shoope" style="height:50px; margin-right:8px;">
+                            <img src="{{ asset('images/qris.png') }}" alt="qris" style="height:50px; margin-right:8px;">
+
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <div class="footer-widget mb-30">
-                        <h5>Quick Links</h5>
+                        <h5>Kotama</h5>
                         <ul class="links">
                             <li><a href="{{route('products.index')}}">Products</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="{{route('about')}}">About</a></li>
+                            <li><a href="{{route('contact')}}">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -212,23 +249,8 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget mb-30">
-                        <h5>Subscription Offer</h5>
-                        <div class="subscription">
-                            <form action="#" class="mb-20">
-                                <input type="email" placeholder="Enter Email ID">
-                                <button type="submit">SEND</button>
-                            </form>
-                            <p>Sign up to receive updates, promotions, and sneak peaks of upcoming products.</p>
-                            <div class="social-icon pt-15">
-                                <span>Follow Us On:</span>
-                                <a href="#"><i class="fab fa-facebook-square"></i></a>
-                                <a href="#"><i class="fab fa-twitter-square"></i></a>
-                                <a href="#"><i class="fab fa-linkedin"></i></a>
-                                <a href="#"><i class="fab fa-pinterest-square"></i></a>
-                                <a href="#"><i class="fab fa-youtube-square"></i></a>
-                                <a href="#"><i class="fab fa-behance-square"></i></a>
-                            </div>
-                        </div>
+                            <h5>Follow Us On:</h5>
+                            <a href="https://www.instagram.com/kotama_official" target="_blank"><i class="fab fa-instagram-square"></i></a>
                     </div>
                 </div>
             </div>
@@ -239,14 +261,16 @@
             <div class="row">
                 <div class="col-md-6 col-12">
                     <div class="copyright-text">
-                        <span>© 2020, Retro Theme. Made with passion by Basictheme.</span>
+                        <span>
+                            &copy; {{ date('Y') }} Kotama. All Rights Reserved.
+                        </span>
                     </div>
                 </div>
-                <div class="col-md-6 col-12">
-                    <div class="copyright-text text-right">
-                        <span>All Right Reserved By Basictheme.</span>
-                    </div>
-                </div>
+{{--                <div class="col-md-6 col-12">--}}
+{{--                    <div class="copyright-text text-right">--}}
+{{--                        <span>All Right Reserved By Basictheme.</span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -272,6 +296,8 @@
 <script src="{{asset("js/jquery.mb.YTPlayer.min.js")}}"></script>
 <script src="{{asset("js/wow.min.js")}}"></script>
 <script src="{{asset("js/main.js")}}"></script>
+
+
 </body>
 
 </html>

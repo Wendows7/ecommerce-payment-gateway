@@ -59,5 +59,10 @@ class UserService
         return $data;
     }
 
+    public function updateProfile($id, $data)
+    {
+        return $this->user->where('id', $id)->update($data);
+    }
+
 
 }

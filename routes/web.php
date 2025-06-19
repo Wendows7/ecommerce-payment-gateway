@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/product/buy', [CartController::class, 'buyNow'])->name('product.buy');
 
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('user.updateProfile');
+
 });
 
 

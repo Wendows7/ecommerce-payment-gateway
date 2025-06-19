@@ -85,5 +85,35 @@ class UserController extends Controller
 
     }
 
+    public function profile()
+    {
+        $user = auth()->user();
+        $totalProductByCategory = $this->productService->getTotalProductByCategory();
+        $products = $this->productService->getAllProducts();
+
+        return view('profile.index', compact('user', 'totalProductByCategory', 'products'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'nullable|min:5|max:255',
+            'email' => 'nullable|email:dns',
+            'password' => 'nullable|min:5',
+        ]);
+
+        // If name or email is null, use the current user's name and email
+        $validatedData['name'] = ($request->name == null) ? auth()->user()->name  : $request->name;
+        $validatedData['email'] = ($request->email == null) ? auth()->user()->email : $request->email;
+
+        // If password is not provided, keep the current user's password
+        $validatedData['password'] = ($request->password == null) ? auth()->user()->password : bcrypt($request->password);
+
+
+        $this->userService->updateProfile(auth()->user()->id, $validatedData);
+
+        return redirect()->back()->with('success', 'Profile updated successfully!');
+    }
+
 
 }

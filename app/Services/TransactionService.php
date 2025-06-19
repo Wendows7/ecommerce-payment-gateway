@@ -108,6 +108,16 @@ class TransactionService
             ->get();
     }
 
+    public function getMostSoldProduct()
+    {
+        return $this->transaction->select('product_id', \DB::raw('SUM(quantity) as total_quantity'))
+            ->groupBy('product_id')
+            ->orderBy('total_quantity', 'desc')
+            ->with('product')
+            ->take(2)
+            ->get();
+    }
+
 
 
 }

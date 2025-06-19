@@ -7,7 +7,6 @@
         <a href="/dashboard">KTM</a>
       </div>
       <ul class="sidebar-menu">
-          <li class={{ Request::is('dashboard/admin')? 'active' : '' }} ><a class="nav-link" href="{{route('admin.index')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
           <li class={{ Request::is('dashboard/admin/users')? 'active' : '' }}><a class="nav-link" href="{{route('admin.users')}}"><i class="far fa-user"></i> <span>Users</span></a></li>
           <li class="dropdown {{ Request::is('dashboard/admin/data/*')? 'active' : '' }}">
             <a href="" class="nav-link has-dropdown"><i class="fas fa-database"></i> <span>Data</span></a>

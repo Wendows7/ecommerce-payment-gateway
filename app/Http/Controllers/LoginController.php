@@ -43,7 +43,7 @@ class LoginController extends Controller
             {
                 $waktuLogin = Carbon::now();
                 $waktuLogin = session()->put('waktuLogin', $waktuLogin);
-                return redirect()->route('admin.index');
+                return redirect()->route('admin.orders');
             }
             return redirect()->route('home')->with('success', 'Login Successful!');
         }else{
