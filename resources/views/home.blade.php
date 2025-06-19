@@ -223,12 +223,13 @@
                             <div class="pro-title">
                                 <h6>
                                     <a href="{{route('products.detail', ['product' => $product->id])}}">{{$product->name}}</a>
+                                    <p>({{$product->category->name}})</p>
                                 </h6>
                                 <h5 class="pro-price">Rp {{number_format($product->price)}}</h5>
                             </div>
-                            <div class="cart-icon">
-                                <a href="cart.html"><i class="fal fa-heart"></i></a>
-                            </div>
+{{--                            <div class="cart-icon">--}}
+{{--                                <a href="cart.html"><i class="fal fa-heart"></i></a>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
