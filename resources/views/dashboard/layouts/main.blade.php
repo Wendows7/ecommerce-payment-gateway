@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Kotama Dashboard</title>
-  <link rel="icon" type="image/x-icon" href="{{ asset("user_assets/assets/img/cat777.svg") }}" />
-  <!-- General CSS Files -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset("images/logo.jpeg")}}">
+    <!-- General CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">
 

@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 
 class ProductService
 {
@@ -113,22 +114,13 @@ class ProductService
 
 
         if($request->file('image_1')){
-            if ($request->oldImage_1){
-                Storage::delete($request->oldImage_1);
-            }
-            $validateData['image'] = $request->file('image_1')->store('product-images', 'public');
+            $validateData['image'] = $this->resizeAndStoreImage($request->file('image_1'), $request->oldImage_1);
         }
         if($request->file('image_2')){
-            if ($request->oldImage_2){
-                Storage::delete($request->oldImage_2);
-            }
-            $validateData['image_2'] = $request->file('image_2')->store('product-images', 'public');
+            $validateData['image_2'] = $this->resizeAndStoreImage($request->file('image_2'), $request->oldImage_2);
         }
         if($request->file('image_3')){
-            if ($request->oldImage_3){
-                Storage::delete($request->oldImage_3);
-            }
-            $validateData['image_3'] = $request->file('image_3')->store('product-images', 'public');
+            $validateData['image_3'] = $this->resizeAndStoreImage($request->file('image_3'), $request->oldImage_3);
         }
 
         // Update product main data
@@ -171,16 +163,16 @@ class ProductService
 
         // Handle images
         if ($request->file('image_1')) {
-            $validateData['image'] = $request->file('image_1')->store('product-images', 'public');
+            $validateData['image'] = $this->resizeAndStoreImage($request->file('image_1'));
         }
         if ($request->file('image_2')) {
-            $validateData['image_2'] = $request->file('image_2')->store('product-images', 'public');
-        }else{
+            $validateData['image_2'] = $this->resizeAndStoreImage($request->file('image_2'));
+        } else {
             $validateData['image_2'] = 'assets/img/blank-image.jpg';
         }
         if ($request->file('image_3')) {
-            $validateData['image_3'] = $request->file('image_3')->store('product-images', 'public');
-        }else{
+            $validateData['image_3'] = $this->resizeAndStoreImage($request->file('image_3'));
+        } else {
             $validateData['image_3'] = 'assets/img/blank-image.jpg';
         }
 
@@ -198,6 +190,29 @@ class ProductService
         }
 
         return $product;
+    }
+
+    protected function resizeAndStoreImage($file, $oldPath = null)
+    {
+        // Delete old image if exists
+        if ($oldPath) {
+            Storage::delete($oldPath);
+        }
+
+        $filename = time() . '_' . $file->getClientOriginalName();
+
+        // Create image instance and resize
+        $img = Image::read($file->getRealPath());
+//        check if the size is 335x335, if not resize it
+        if ($img->width() != 335 || $img->height() != 335) {
+            $img->cover(335, 335);
+        }
+
+        // Save the resized image
+        $path = 'product-images/' . $filename;
+        Storage::disk('public')->put($path, $img->toPng());
+
+        return $path;
     }
 
 }

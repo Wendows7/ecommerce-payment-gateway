@@ -123,6 +123,14 @@
             background-color: #28a745;
             color: white;
         }
+
+        .out-of-stock {
+            filter: blur(1px);
+            opacity: 0.5;
+            color: #999;
+            text-decoration: line-through;
+            pointer-events: none;
+        }
     </style>
 
 
@@ -193,30 +201,41 @@
                         <div class="pro-details-content mt-15">
                             <h4>{{$product->name}}</h4>
                             <span class="details-pro-price mb-40">Rp {{number_format($product->price)}}</span>
-                            <p>{{$product->description}}</p>
+                            <p>{!! $product->description !!}</p>
                             <div class="size-wrapper mb-35">
                                 <div class="size-selector">
                                     <span><strong>Select Size :</strong></span>
-                                    <label>
-                                        <input type="radio" class="size-radio" name="size_radio" value="39">
-                                        <span>39</span>
-                                    </label>
-                                    <label>
-                                        <input type="radio" class="size-radio" name="size_radio" value="40">
-                                        <span>40</span>
-                                    </label>
-                                    <label>
-                                        <input type="radio" class="size-radio" name="size_radio" value="41">
-                                        <span>41</span>
-                                    </label>
-                                    <label>
-                                        <input type="radio" class="size-radio" name="size_radio" value="42">
-                                        <span>42</span>
-                                    </label>
-                                    <label>
-                                        <input type="radio" class="size-radio" name="size_radio" value="43">
-                                        <span>43</span>
-                                    </label>
+                                    @foreach($product->stockProduct as $stock)
+                                        <label>
+                                            @if($stock->stock == 0)
+                                            <input type="radio" class="size-radio" name="size_radio" value="{{ $stock->size }}" disabled>
+                                            <span class="out-of-stock">{{ $stock->size }}</span>
+                                            @else
+                                            <input type="radio" class="size-radio" name="size_radio" value="{{ $stock->size }}">
+                                            <span>{{ $stock->size }}</span>
+                                            @endif
+                                        </label>
+                                    @endforeach
+{{--                                    <label>--}}
+{{--                                        <input type="radio" class="size-radio" name="size_radio" value="39">--}}
+{{--                                        <span>39</span>--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="radio" class="size-radio" name="size_radio" value="40">--}}
+{{--                                        <span>40</span>--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="radio" class="size-radio" name="size_radio" value="41">--}}
+{{--                                        <span>41</span>--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="radio" class="size-radio" name="size_radio" value="42">--}}
+{{--                                        <span>42</span>--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="radio" class="size-radio" name="size_radio" value="43">--}}
+{{--                                        <span>43</span>--}}
+{{--                                    </label>--}}
                                 </div>
                             </div>
                             <div class="pro-quan-area mb-55">
