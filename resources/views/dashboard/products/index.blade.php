@@ -41,6 +41,7 @@
                         <th>Description</th>
                         <th>Total Stock</th>
                         <th>image</th>
+                        <th>Price</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -58,6 +59,7 @@
                         @else
                         <td><img src="{{ asset($product->image) }}" width="100" height="100" alt=""></td>
                         @endif
+                          <td>{{ $product->price }}</td>
                         {{-- <td>{{ $product->created_at }}</td>
                         <td>{{ $product->updated_at }}</td> --}}
                         <td>

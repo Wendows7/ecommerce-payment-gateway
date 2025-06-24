@@ -31,6 +31,10 @@
                             @endif
                         </div>
                         <div class="form-group">
+                            <label>Price</label>
+                            <p class="form-control-plaintext">{{ $value->price }}</p>
+                        </div>
+                        <div class="form-group">
                             <label>Sizes & Stock</label>
                             <table class="table table-bordered">
                                 <thead>
