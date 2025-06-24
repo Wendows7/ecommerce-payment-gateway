@@ -1,4 +1,4 @@
-name: build image and push to registry
+name: CI/CD Pipeline with Docker
 on:
   push:
     branches:
@@ -16,3 +16,14 @@ jobs:
         run: docker login -u arswendosryhd -p ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Push image to Docker Hub
         run: docker push arswendosryhd/ecommerce-payment-gateway:latest
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.AZURE_PRIVATE_KEY }}
+          script: |
+              docker pull arswendosryhd/ecommerce-payment-gateway:latest
+              cd /home/wendouser/ecommerce-payment-gateway
+              docker compose up -d
