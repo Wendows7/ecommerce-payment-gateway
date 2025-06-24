@@ -59,7 +59,7 @@
                         @else
                         <td><img src="{{ asset($product->image) }}" width="100" height="100" alt=""></td>
                         @endif
-                          <td>Rp.{{ number_format($value->price) }}</td>
+                          <td>Rp.{{ number_format($product->price) }}</td>
                         {{-- <td>{{ $product->created_at }}</td>
                         <td>{{ $product->updated_at }}</td> --}}
                         <td>

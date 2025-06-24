@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <label>Price</label>
-                            <p class="form-control-plaintext">Rp.{{ number_format($value->price) }}</p>
+                            <p class="form-control-plaintext">Rp.{{ number_format($product->price) }}</p>
                         </div>
                         <div class="form-group">
                             <label>Sizes & Stock</label>
