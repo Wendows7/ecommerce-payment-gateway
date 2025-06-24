@@ -10,7 +10,7 @@ use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Midtrans\Config;
 use Midtrans\Snap;
-use App\Services\orderService;
+use App\Services\OrderService;
 use function Symfony\Component\Translation\t;
 
 class PaymentController extends Controller
@@ -24,7 +24,7 @@ class PaymentController extends Controller
 
     protected $stockProductService;
 
-    public function __construct(orderService $orderService, PaymentService $paymentService, MidtransService $midtransService,
+    public function __construct(OrderService $orderService, PaymentService $paymentService, MidtransService $midtransService,
                                 TransactionService $transactionService, productService $productService, StockProductService $stockProductService)
     {
         $this->orderService = $orderService;
