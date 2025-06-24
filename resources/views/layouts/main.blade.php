@@ -96,13 +96,13 @@
                     <div class="main-menu text-center">
                         <nav id="mobile-menu">
                             <ul>
-                                <li><a style="font-size: 20px;" href="{{route('home')}}">Home</a></li>
+                                <li><a style="font-size: 15px;" href="{{route('home')}}">Home</a></li>
                                 <li class="mega-menu">
-                                    <a style="font-size: 20px;" href="{{route('products.index')}}">Products</a>
+                                    <a style="font-size: 15px;" href="{{route('products.index')}}">Products</a>
                                 </li>
-                                <li><a style="font-size: 20px;" href="{{route('about')}}">About</a></li>
+                                <li><a style="font-size: 15px;" href="{{route('about')}}">About</a></li>
                                 <li>
-                                    <a style="font-size: 20px;" href="{{route('contact')}}">Contact</a>
+                                    <a style="font-size: 15px;" href="{{route('contact')}}">Contact</a>
                                 </li>
                             </ul>
                         </nav>
@@ -116,9 +116,9 @@
 
 
                         @if(auth()->check())
-                        <a href="{{route('user.profile')}}"><i style="font-size: 20px;" class="fas fa-user">Profile</i></a>
-                        <a href="{{route('cart.index')}}"><i style="font-size: 20px;" class="fas fa-cart-arrow-down">Cart</i></a>
-                        <a href="{{route('user.orders')}}"><i style="font-size: 20px;" class="fas fa-receipt">Orders</i></a>
+                        <a href="{{route('user.profile')}}"><i style="font-size: 15px;" class="fas fa-user">Profile</i></a>
+                        <a href="{{route('cart.index')}}"><i style="font-size: 15px;" class="fas fa-cart-arrow-down">Cart</i></a>
+                        <a href="{{route('user.orders')}}"><i style="font-size: 15px;" class="fas fa-receipt">Orders</i></a>
                             <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                                 @csrf
                                 <button type="submit" style="
@@ -132,8 +132,8 @@
                                 </button>
                             </form>
                         @else
-                            <a href="{{route('auth.login')}}"><b><i style="font-size: 20px;">Login</i></b></a>
-                            <a href="{{route('register')}}"><b><i style="font-size: 20px;">Register</i></b></a>
+                            <a href="{{route('auth.login')}}"><b><i style15font-size: 20px;">Login</i></b></a>
+                            <a href="{{route('register')}}"><b><i style15font-size: 20px;">Register</i></b></a>
                         @endif
                     </div>
                 </div>

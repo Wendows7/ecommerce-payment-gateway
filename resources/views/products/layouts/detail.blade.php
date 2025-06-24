@@ -211,7 +211,7 @@
                                             <input type="radio" class="size-radio" name="size_radio" value="{{ $stock->size }}" disabled>
                                             <span class="out-of-stock">{{ $stock->size }}</span>
                                             @else
-                                            <input type="radio" class="size-radio" name="size_radio" value="{{ $stock->size }}">
+                                            <input type="radio" class="size-radio" name="size_radio" value="{{ $stock->size }}" {{ $loop->first ? 'checked' : '' }}>
                                             <span>{{ $stock->size }}</span>
                                             @endif
                                         </label>
