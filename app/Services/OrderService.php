@@ -53,15 +53,17 @@ class OrderService
 
     public function getOrderDataByUserId($userId)
     {
-        $orderData = $this->orderService->where('user_id', $userId)->with('transactions')->latest()->get();
+        $orderData = $this->orderService->where('user_id', $userId)->with('transactions','orderDetails')->latest()->get();
         $data = collect($orderData)->map(function ($order) {
             return [
                 'order_code' => $order->order_code,
                 'status' => $order->status,
                 'total_price' => $order->total_price,
                 'created_at' => $order->created_at,
+                'updated_at' => $order->updated_at,
                 'transactions' => $this->transactionService->where('order_id', $order->id)->with('product')->get(),
                 'payment' => $this->paymentService->where('order_id', $order->id)->get(),
+                'orderDetails' => $order->orderDetails,
             ];
         });
 
@@ -119,6 +121,7 @@ class OrderService
                 'status' => $order->status,
                 'total_price' => $order->total_price,
                 'created_at' => $order->created_at,
+                'updated_at' => $order->updated_at,
                 'transactions' => $this->transactionService->where('order_id', $order->id)->with('product')->get(),
                 'payment' => $this->paymentService->where('order_id', $order->id)->get(),
                 'user' => $order->user,
@@ -132,6 +135,27 @@ class OrderService
     {
         $this->orderService->where('order_code', $request->order_code)->update(['status' => $request->status]);
     }
+
+    public function getTotalEarningPerMonths()
+    {
+        $orders = $this->orderService->where('status', 'paid')
+            ->selectRaw('DATE_FORMAT(created_at, "%M") as month, SUM(total_price) as total_earning')
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->take(6) // Limit to the last 6 months
+            ->get();
+
+//        return data per month
+        $data = [];
+        foreach ($orders as $order) {
+            $data[] = [
+                'month' => $order->month,
+                'total_earning' => $order->total_earning,
+            ];
+        }
+        return $data;
+    }
+
 
 
 }

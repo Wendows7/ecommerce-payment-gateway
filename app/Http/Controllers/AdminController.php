@@ -10,6 +10,7 @@ use App\Services\OrderService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use App\Services\TransactionService;
 
 class AdminController extends Controller
 {
@@ -20,14 +21,17 @@ class AdminController extends Controller
 
     protected $orderService;
 
+    protected $transactionService;
+
     public function __construct(ProductService $productService, UserService $userService, AdminService $adminService,
-                                CategoryProductService $categoryService, OrderService $orderService)
+                                CategoryProductService $categoryService, OrderService $orderService, TransactionService $transactionService)
     {
         $this->productService = $productService;
         $this->userService = $userService;
         $this->adminService = $adminService;
         $this->categoryService = $categoryService;
         $this->orderService = $orderService;
+        $this->transactionService = $transactionService;
     }
 
     public function index()
@@ -199,6 +203,27 @@ class AdminController extends Controller
         $this->orderService->updateStatusOrderByOrderCode($request);
 
         return redirect()->back()->with('success', 'Order status has been updated!');
+
+    }
+
+    public function totalEarningPerMonths()
+    {
+        $data = $this->orderService->getTotalEarningPerMonths();
+
+        return response()->json($data);
+    }
+
+    public function getMostSoldProduct()
+    {
+        $data = $this->transactionService->getMostSoldProduct(5);
+        $finalData =  $data->map(function ($item) {
+            return [
+                'product_name' => $item->product->name,
+                'total_quantity' => $item->total_quantity,
+            ];
+        });
+
+        return response()->json($finalData);
 
     }
 

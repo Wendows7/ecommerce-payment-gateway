@@ -40,8 +40,8 @@
                                     };
                                 @endphp
                                 <span class="badge badge-status {{ $badgeClass }} mt-1">
-                                {{ ucfirst($order['status'] ?? '-') }}
-                            </span>
+                {{ ucfirst($order['status'] ?? '-') }}
+            </span>
                             </div>
                         </div>
                         <div class="col-6 col-md-6">
@@ -50,13 +50,27 @@
                                 <div class="fw-bold mt-1">Rp {{ number_format($order['total_price'] ?? 0, 0, ',', '.') }}</div>
                             </div>
                         </div>
-{{--                        <div class="col-12 col-md-4">--}}
-{{--                            <div class="bg-white rounded-3 p-3 h-100 shadow-sm">--}}
-{{--                                <div class="text-muted small">Status Pengiriman</div>--}}
-{{--                                <div class="mt-1">{{ $order['customer_name'] ?? '-' }}</div>--}}
-{{--                                <div class="small text-muted">{{ $order['customer_email'] ?? '' }}</div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+{{--                        @dd($order['orderDetails']->first()->address)--}}
+                        <div class="col-12 mt-3">
+                            <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
+                                <div class="text-muted small">Alamat Pengiriman</div>
+                                <div class="mt-1">
+                                    <i class="bi bi-truck me-1"></i>
+                                    {{ $order['orderDetails']->first()->address ?? '-' }}
+                                </div>
+                            </div>
+                        </div>
+                        @if($order['status'] == 'paid')
+                            <div class="col-12 mt-3">
+                                <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
+                                    <div class="text-muted small">Estimasi Sampai Tujuan</div>
+                                    <div class="mt-1">
+                                        <i class="bi bi-truck me-1"></i>
+                                        {{ $order['updated_at']->addDays(7)->format('d M Y') }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="bg-white rounded-3 p-3 shadow-sm">
                         <div class="mb-2 fw-semibold">Order Items</div>

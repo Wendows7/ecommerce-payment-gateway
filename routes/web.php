@@ -81,6 +81,9 @@ Route::middleware('admin')->group(function () {
     Route::get('dashboard/admin/orders', [AdminController::class, 'getOrders'])->name('admin.orders');
     Route::put('dashboard/admin/orders/update', [AdminController::class, 'updateStatusOrder'])->name('admin.orders.update');
 
+    Route::get('dashboard/admin/getEarningPerMonth', [AdminController::class, 'totalEarningPerMonths'])->name('admin.getEarningPerMonth');
+    Route::get('dashboard/admin/getMostSoldProduct', [AdminController::class, 'getMostSoldProduct'])->name('admin.getMostSoldProduct');
+
 
 });
 

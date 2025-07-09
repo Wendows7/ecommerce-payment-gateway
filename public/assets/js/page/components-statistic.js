@@ -112,7 +112,7 @@ var myChart = new Chart(ctx, {
     labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     datasets: [{
       label: 'Statistics',
-      data: [460, 458, 330, 502, 430, 610, 488],
+      data: [500, 458, 330, 502, 430, 610, 488],
       borderWidth: 2,
       backgroundColor: 'rgba(254,86,83,.7)',
       borderColor: 'rgba(254,86,83,.7)',
