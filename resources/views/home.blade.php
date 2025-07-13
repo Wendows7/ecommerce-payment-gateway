@@ -184,16 +184,16 @@
                         </div>
                     @endif
                         @foreach($mostSoldProducts as $product)
-                    <div class="col-md-6 custom-col-5">
+                        <div class="col-md-6 custom-col-5">
                             <div class="product-banner mb-30 text-center">
                                 <a href="{{route('products.detail', ['product' => $product->product->id])}}">
                                     <img src="{{asset($product->product->image)}}" class="img-fluid banner-product-img" alt="">
                                 </a>
                                 <div class="banner-text">
-                                    <h3><a href="{{route('products.detail', ['product' => $product->product->id])}}">{{$product->product->name}}</a></h3>
+                                    <h3><a href="{{route('products.detail', ['product' => $product->product->id])}}" class="product-name">{{$product->product->name}}</a></h3>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                         @endforeach
                 </div>
             </div>
@@ -422,6 +422,17 @@
                 margin-top: 10px;
             }
         }
+
+        .banner-text h3 a.product-name {
+            color: #000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .banner-text h3 a.product-name:hover {
+            color: #555;
+        }
+
     </style>
     <!-- jQuery & Slick JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
