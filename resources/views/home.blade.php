@@ -424,7 +424,7 @@
         }
 
         .banner-text h3 a.product-name {
-            color: #000;
+            color: yellow;
             text-decoration: none;
             transition: color 0.3s ease;
         }
