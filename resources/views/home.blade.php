@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('body')
     @include('sweetalert::alert')
-
     <main>
     <!-- hero-area start -->
 {{--    <section class="hero-area position-relative ">--}}
@@ -191,7 +190,7 @@
                                     <img src="{{asset($product->product->image)}}" class="img-fluid banner-product-img" alt="">
                                 </a>
                                 <div class="banner-text">
-                                    <h3><a href="{{route('products.detail', ['product' => $product->product->id])}}">{{$product->product->name}}</a></h3>
+                                    <h3 style="color: #0a001f;"><a href="{{route('products.detail', ['product' => $product->product->id])}}">{{$product->product->name}}</a></h3>
                                 </div>
                             </div>
                     </div>
@@ -389,6 +388,40 @@
             z-index: 2;
         }
 
+    </style>
+    <style>
+        .banner-product-img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .banner-product-img:hover {
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .banner-product-img {
+                max-height: 500px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .banner-product-img {
+                max-height: 350px;
+            }
+
+            .banner-text h3 {
+                font-size: 18px;
+                margin-top: 10px;
+            }
+        }
     </style>
     <!-- jQuery & Slick JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
