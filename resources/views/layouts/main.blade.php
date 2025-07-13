@@ -64,6 +64,122 @@
         /*    justify-content: center;*/
         /*    align-items: center;*/
         /*}*/
+
+        /* Mobile Menu Styles */
+        .mobile-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            list-style: none;
+        }
+
+        .mobile-logout-form {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-logout-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: inherit;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #mobile-menu-active i {
+            margin-right: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .side-mobile-menu li a {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Fix existing header icon issues */
+        .header-left-icon a i {
+            font-size: 15px;
+        }
+
+        .header-left-icon a i:after {
+            content: "";
+            margin-left: 5px;
+        }
+
+        .auth-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-links a, .header-logout-btn {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            font-size: 15px;
+            color: black;
+        }
+
+        .header-logout-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .auth-links i {
+            margin-right: 5px;
+            font-size: 15px;
+        }
+
+        /* Fix style error in the original code */
+        .auth-links a span, .header-logout-btn span {
+            font-size: 15px;
+        }
+
+        @media (max-width: 1199px) {
+            .auth-links a span, .header-logout-btn span {
+                display: none;
+            }
+
+            .auth-links i {
+                font-size: 18px;
+                margin-right: 0;
+            }
+        }
+        .mobile-logout-item {
+            margin-top: 300px;
+        }
+
+        .mobile-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            list-style: none;
+        }
+
+        .mt-3 {
+            margin-top: 15px;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        .mobile-logout-btn {
+            color: #ff5252;
+            font-weight: 500;
+        }
+
+        .mobile-logout-btn i {
+            color: #ff5252;
+        }
     </style>
 
 
@@ -114,27 +230,23 @@
                             <i class="fas fa-search"></i>
                         </a>
 
-
-                        @if(auth()->check())
-                        <a href="{{route('user.profile')}}"><i style="font-size: 15px;" class="fas fa-user">Profile</i></a>
-                        <a href="{{route('cart.index')}}"><i style="font-size: 15px;" class="fas fa-cart-arrow-down">Cart</i></a>
-                        <a href="{{route('user.orders')}}"><i style="font-size: 15px;" class="fas fa-receipt">Orders</i></a>
-                            <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
-                                @csrf
-                                <button type="submit" style="
-                                    font-size: 20px;
-                                    color: black;
-                                    background: none;
-                                    border: none;
-                                    cursor: pointer;
-                                    padding: 30px;">
-                                    <i class="fas fa-sign-out-alt">Logout</i>
-                                </button>
-                            </form>
-                        @else
-                            <a href="{{route('auth.login')}}"><b><i style15font-size: 20px;">Login</i></b></a>
-                            <a href="{{route('register')}}"><b><i style15font-size: 20px;">Register</i></b></a>
-                        @endif
+                        <!-- Hide these on mobile with d-none d-lg-block -->
+                        <div class="auth-links d-none d-lg-flex">
+                            @if(auth()->check())
+                                <a href="{{route('user.profile')}}"><i class="fas fa-user"></i><span>Profile</span></a>
+                                <a href="{{route('cart.index')}}"><i class="fas fa-cart-arrow-down"></i><span>Cart</span></a>
+                                <a href="{{route('user.orders')}}"><i class="fas fa-receipt"></i><span>Orders</span></a>
+                                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                                    @csrf
+                                    <button type="submit" class="header-logout-btn">
+                                        <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{route('auth.login')}}"><i class="fas fa-sign-in-alt"></i><span>Login</span></a>
+                                <a href="{{route('register')}}"><i class="fas fa-user-plus"></i><span>Register</span></a>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="col-2 col-md-1 d-block d-lg-none">
@@ -156,18 +268,40 @@
         <a href="javascript:void(0);"><i class="fas fa-times"></i></a>
     </div>
     <!-- side-mobile-menu start -->
+    <!-- side-mobile-menu start -->
     <nav class="side-mobile-menu">
         <ul id="mobile-menu-active">
-            <li><a href="{{route('home')}}">Home</a>
-            </li>
-            <li>
-                <a href="{{route('products.index')}}">Products</a>
-            <li>
-            <li><a href="{{route('about')}}">About</a></li>
-             <li>   <a href="{{route('contact')}}">Contact</a>
-            </li>
+            <li><a href="{{route('home')}}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{{route('products.index')}}"><i class="fas fa-box"></i> Products</a></li>
+            <li><a href="{{route('about')}}"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="{{route('contact')}}"><i class="fas fa-envelope"></i> Contact</a></li>
+
+            <!-- User actions -->
+            @if(auth()->check())
+                <li><a href="{{route('user.profile')}}"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="{{route('cart.index')}}"><i class="fas fa-cart-arrow-down"></i> Cart</a></li>
+                <li><a href="{{route('user.orders')}}"><i class="fas fa-receipt"></i> Orders</a></li>
+
+                <!-- Divider before logout -->
+                <li class="mobile-divider mt-3 mb-3"></li>
+
+                <!-- Logout button at the bottom -->
+                <li class="mobile-logout-item">
+                    <form action="{{ route('logout') }}" method="POST" class="mobile-logout-form">
+                        @csrf
+                        <button type="submit" class="mobile-logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </li>
+            @else
+                <li class="mobile-divider mt-3 mb-3"></li>
+                <li><a href="{{route('auth.login')}}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="{{route('register')}}"><i class="fas fa-user-plus"></i> Register</a></li>
+            @endif
         </ul>
     </nav>
+    <!-- side-mobile-menu end -->
     <!-- side-mobile-menu end -->
 </aside>
 <div class="body-overlay"></div>

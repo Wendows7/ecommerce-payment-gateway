@@ -190,7 +190,7 @@
                                     <img src="{{asset($product->product->image)}}" class="img-fluid banner-product-img" alt="">
                                 </a>
                                 <div class="banner-text">
-                                    <h3 style="color: #0a001f;"><a href="{{route('products.detail', ['product' => $product->product->id])}}">{{$product->product->name}}</a></h3>
+                                    <h3><a href="{{route('products.detail', ['product' => $product->product->id])}}">{{$product->product->name}}</a></h3>
                                 </div>
                             </div>
                     </div>
