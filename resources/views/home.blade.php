@@ -189,11 +189,14 @@
                                 <a href="{{route('products.detail', ['product' => $product->product->id])}}">
                                     <img src="{{asset($product->product->image)}}" class="img-fluid banner-product-img" alt="">
                                 </a>
-                                <div class="banner-text">
-                                    <h3><a href="{{route('products.detail', ['product' => $product->product->id])}}" class="product-name">{{$product->product->name}}</a></h3>
-                                </div>
+{{--                                <div class="banner-text">--}}
+{{--                                    <h3><a href="{{route('products.detail', ['product' => $product->product->id])}}" class="product-name">{{$product->product->name}}</a></h3>--}}
+{{--                                </div>--}}
                             </div>
+                                <center><h3><a href="{{route('products.detail', ['product' => $product->product->id])}}" class="product-name">{{$product->product->name}}</a></h3></center>
                         </div>
+{{--                            <div class="banner-text">--}}
+{{--                            </div>--}}
                         @endforeach
                 </div>
             </div>
